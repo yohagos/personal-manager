@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: personal-manager-db
+    image: postgres
+    environment:
+      POSTGRES_USER: personal
+      POSTGRES_PASSWORD: personal
+      POSTGRES_DB: personal
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - personal-manager-network
+    restart: unless-stopped
+
+  keycloak:
+    container_name: personal-manager-keycloak
+    image: quay.io/keycloak/keycloak:24.0.4
+    command: start-dev --verbose
+    ports:
+      - "9090:8080"
+    depends_on:
+      - postgres
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://personal-manager-db:5432/${POSTGRES_DB}
+      KC_DB_USERNAME: personal
+      KC_DB_PASSWORD: personal
+    restart: always
+    networks:
+      - personal-manager-network
+
+
+networks:
+  personal-manager-network:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
