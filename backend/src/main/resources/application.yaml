@@ -1,0 +1,46 @@
+springdoc:
+  default-produces-media-type: application/json
+
+application:
+  cors:
+    origins: http://localhost:4200,http://localhost:9090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/personal
+    username: personal
+    password: personal
+    #driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+          #dialect: org.hibernate.dialect.PostgreSQLDialect
+    #database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:9090/realms/shippuden-cli"
+          jwk-set-uri: "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs"
+  servlet:
+    multipart:
+      max-file-size: 3MB
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n"
+
+server:
+  port: 8088
+  servlet:
+    context-path: /api/v1
