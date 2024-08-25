@@ -1,8 +1,7 @@
 package com.prototype.personal_manager.entities;
 
 import com.prototype.personal_manager.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +22,7 @@ public class Facility extends BaseEntity {
     private String assistentFirstName;
     private String assistentLastName;
     private String facilityTelephoneNumber;
-    private String city;
-    private String streetName;
-    private String streetNumber;
-    private String zipCode;
-
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id")
+    private Location location;
 }

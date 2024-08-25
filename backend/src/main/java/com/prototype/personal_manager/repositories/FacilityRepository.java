@@ -17,10 +17,10 @@ public interface FacilityRepository extends JpaRepository<Facility, UUID> {
             """)
     Page<Facility> findAllDisplayableFacilities(Pageable pageable);
 
-    @Query("""
+    /*@Query("""
             SELECT fac
             FROM Facility fac
-            WHERE fac.cityName == :cityName
+            WHERE fac.location.cityName == :cityName
             """)
-    Page<Facility> findAllDisplayableFacilitiesByCityName(Pageable pageable, String cityName);
+    Page<Facility> findAllDisplayableFacilitiesByCityName(Pageable pageable, String cityName);*/
 }

@@ -18,7 +18,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     private final String[] WHITE_LIST_URL = {
-            "/villages/**",
+            "/employees/**",
+            "/facilities/**",
+            "/schedules/**",
             "/v1/api-docs",
             "/v2/api-docs",
             "/v3/api-docs",
